@@ -20,8 +20,8 @@ FDA1 <- na.omit(FDA) # NO MISSING VALUES!
 
 # Rename variables
 FDA2 <- FDA1 |> 
-  select(-Recalling.Firm.Country, -Recalling.Firm.City) |> 
-  rename(product_classification = Product.Classification,
+  select(-Recalling.Firm.Country, -Recalling.Firm.City) |> # remove unecessary variables
+  rename(product_classification = Product.Classification, # rename to make data easier to read
          firm = Recalling.Firm.Name,
          product_type = Product.Type,
         status = Status,
@@ -31,7 +31,7 @@ FDA2 <- FDA1 |>
         event_classification = Event.Classification,
         event_id = Event.ID,
         center = Center) |> 
-  arrange(recall_date)
+  arrange(recall_date) # arrange oldest to most recent
 # 11 variables
 
 ##### Convert to Excel file #####
