@@ -116,7 +116,7 @@ table(Data$product_type)
 table(Data$state)
 ```
 
-2) Pattern Analysis (specifically time series) SHOULD I DELETE THIS
+2) Pattern Analysis (specifically time series)
 ```{r time series}
 Data$recall_date <- as.Date(Data$recall_date, format = "%m/%d/%Y")
 
