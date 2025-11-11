@@ -1,0 +1,112 @@
+---
+title: "P4 - Hypothesis Testing"
+author: "Madelynn Smith"
+date: "2025-11-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(readxl, dplyr, lubridate, ggplot2, scales, ggcorrplot, maps)
+```
+
+Loading Data and Creating Region Codes
+```{r load data}
+Data <- read_excel("/Users/madelynnjoan/Desktop/FDAcleaned.xlsx") %>% 
+        
+        ###CODING STATES BASED ON REGIONS
+        mutate(region_code = case_when(
+        # 0 = NORTHEAST
+        state %in% c("Maine","New Hampshire","Vermont","Massachusetts","Rhode Island","Connecticut", "New York","New Jersey","Pennsylvania", "District of Columbia") ~ 0,
+        # 1 = SOUTHEAST
+        state %in% c("Delaware","Maryland","District of Columbia","Virginia","West Virginia",
+                 "Kentucky","Tennessee","North Carolina","South Carolina","Georgia",
+                 "Florida","Alabama","Mississippi","Arkansas","Louisiana", "Puerto Rico") ~ 1,
+        # 2 = MIDWEST
+        state %in% c("Ohio","Michigan","Indiana","Illinois","Wisconsin","Minnesota","Iowa",
+                 "Missouri","North Dakota","South Dakota","Nebraska","Kansas") ~ 2,
+
+        # 3 = SOUTHWEST
+        state %in% c("Texas","Oklahoma","New Mexico","Arizona") ~ 3,
+
+        # 4 = WEST
+        state %in% c("Colorado","Wyoming","Montana","Idaho","Utah","Nevada","Washington",
+                 "Oregon","California","Alaska","Hawaii") ~ 4)) %>% 
+
+        mutate(class_code_event = case_when(
+               event_classification == "Class I" ~ 1,
+               event_classification == "Class II" ~ 2,
+               event_classification == "Class III" ~ 3,
+                TRUE ~ NA_real_))
+
+```
+
+Assumption Checks
+```{r asssumptions}
+## 1. Data are counts (frequencies)
+table <- table(Data$event_classification, Data$region_code)
+table
+
+## 2. Categories are mutually exclusive
+ggplot(Data, aes(x = region_code, fill = event_classification)) +
+  geom_bar(position = "fill") +
+  theme(axis.text.x = element_blank()) +
+  labs(title = "Check for Mutually Exclusive Categories",
+       y = "Count", x = "Region Code")
+
+## 3. Independence 
+any(duplicated(Data))
+any(duplicated(Data$product_id))
+
+## 4. Expected counts are greater than or equal to 5
+result <- chisq.test(table)
+result$expected
+#expected counts are greater than 5
+
+```
+
+Run Statistical Tests
+```{r run test}
+chisq.test(table)
+
+X2 <- 816.82
+N <- sum(table)
+k  <- min(nrow(table), ncol(table))
+cramersV <- sqrt(X2 / (N * (k - 1)))
+cramersV
+```
+
+Visualizations
+```{r visualizations}
+##Visual 1
+ggplot(Data, aes(x = factor(region_code), fill = factor(event_classification))) +
+  geom_bar(position = "dodge") +  # bars side by side
+  labs(
+    title = "Event Classifications by Region",
+    x = "Region",
+    y = "Number of Events",
+    fill = "Event Classification"
+  ) +
+  theme_minimal()
+
+##Visual 2
+counts <- Data %>%
+  group_by(region_code, event_classification) %>%
+  summarise(n = n(), .groups = "drop")
+
+# Heat map
+ggplot(counts, aes(x = factor(region_code), y = factor(event_classification), fill = n)) +
+  geom_tile() +             
+  geom_text(aes(label = n), color = "black") +
+  scale_fill_gradient(low = "lightyellow", high = "darkred") +  # more contrast
+  labs(
+    title = "Heat Map of Event Classifications by Region",
+    x = "Region",
+    y = "Event Classification",
+    fill = "Count"
+  ) +
+  theme_minimal()
+
+```
+
+
