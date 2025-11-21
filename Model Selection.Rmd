@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-pacman::p_load(readxl, dplyr, lubridate, ggplot2, scales, ggcorrplot, maps, rpart, rpart.plot)
+pacman::p_load(readxl, dplyr, lubridate, ggplot2, scales, ggcorrplot, maps, rpart, rpart.plot, caret)
 
 ```
 
@@ -110,9 +110,19 @@ pruned <- prune(tree_model_final, cp = tree_model_final$cptable[which.min(tree_m
 rpart.plot(pruned, type = 3, extra = 104, fallen.leaves = TRUE)
 ```
 
-```{r model framework}
+```{r model framework and metric}
 nrow(Data)
 ncol(Data)
+
+# Predict using the pruned tree
+pred_class <- predict(pruned, newdata = Data, type = "class")
+
+# Confusion matrix + F1
+cm <- confusionMatrix(pred_class, Data$ClassI, positive = "Yes", mode = "everything")
+
+cm      # full confusion matrix output
+cm$byClass["F1"]   # just the F1 score
+
 
 ```
 
