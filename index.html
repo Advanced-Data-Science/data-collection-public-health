@@ -123,4 +123,118 @@
                 
                 <div class="highlight-box bg-red-900/30 border-red-500 space-y-2">
                     <p class="text-sm text-red-300 font-bold uppercase">Practical Insignificance</p>
-                    <p class="text-5xl font-extrabold text-red-400">0.
+                    <p class="text-5xl font-extrabold text-red-400">0.018</p>
+                    <p class="text-lg text-gray-200">
+                        **Effect Size ($\eta^2$):** The quarter of the year explains only **1.8%** of the total variance in recall volume.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="pt-4">
+                <h3 class="text-xl font-semibold text-blue-300">Visual Evidence of No Effect</h3>
+                <p class="text-gray-400 italic">
+                    The visualization below clearly shows why the hypothesis failed: the means for all four quarters are too similar.
+                </p>
+                <div class="bg-gray-700/50 p-6 mt-4 rounded-lg text-center text-gray-500 border border-dashed border-gray-600">
+                    ****
+                    <p class="text-sm mt-1">Placeholder for the Mean Quarterly Recalls Bar Chart, confirming near-identical means.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: THE PIVOT (THE TRUE INSIGHT) -->
+    <section id="pivot" class="story-section bg-gray-800">
+        <div class="container mx-auto space-y-8">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="lightbulb" class="w-8 h-8 text-yellow-400"></i>
+                <h2 class="text-3xl font-bold">PHASE 3: THE FUTURE STORY - SEVERITY</h2>
+            </div>
+            
+            <p class="text-xl text-gray-300">
+                A simple count (`RecallCount`) was too crude. The key breakthrough came from exploring other dimensions, revealing a new, critical pattern: **Risk is clustered by geography and severity, not time.**
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Geographic Insight -->
+                <div class="stat-card border-l-4 border-yellow-500 space-y-2">
+                    <h3 class="text-lg font-semibold text-yellow-300">Geographic Risk Clustering</h3>
+                    <p class="text-sm text-gray-400">
+                        Exploratory Analysis revealed total recall volume is strongly clustered in high-population, manufacturing, and distribution hubs (CA, TX, IL, FL).
+                    </p>
+                    <div class="bg-gray-700/50 p-4 mt-2 rounded-md text-center text-gray-500 border border-dashed border-gray-600">
+                        ****
+                        <p class="text-xs mt-1">Placeholder for Geographic Recall Density Map.</p>
+                    </div>
+                </div>
+
+                <!-- Severity Insight -->
+                <div class="stat-card border-l-4 border-yellow-500 space-y-2">
+                    <h3 class="text-lg font-semibold text-yellow-300">The Severity Pattern</h3>
+                    <p class="text-sm text-gray-400">
+                        While total volume is non-seasonal, the *mix* of high-risk recalls may be. The chart below suggests a pattern in **Class I (Most Severe)** recalls by season.
+                    </p>
+                    <div class="bg-gray-700/50 p-4 mt-2 rounded-md text-center text-gray-500 border border-dashed border-gray-600">
+                        ****
+                        <p class="text-xs mt-1">Placeholder for Recall Proportion by Severity Chart.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: ACTIONABLE RECOMMENDATION -->
+    <section id="recommendation" class="story-section bg-gray-900">
+        <div class="container mx-auto space-y-8">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="trending-up" class="w-8 h-8 text-green-400"></i>
+                <h2 class="text-3xl font-bold">PHASE 4: ACTIONABLE STRATEGY</h2>
+            </div>
+
+            <p class="text-xl text-gray-300">
+                The analysis yields two key strategic takeaways for regulators and manufacturers:
+            </p>
+
+            <div class="space-y-6">
+                <!-- Recommendation 1: Resource Allocation -->
+                <div class="stat-card border-l-4 border-green-500">
+                    <h3 class="text-xl font-bold text-green-300 mb-2">1. Resource Allocation: Maintain Uniformity</h3>
+                    <p class="text-gray-400">
+                        **Maintain quality control and inspection resources uniformly throughout the year.** Since the effect size ($\eta^2=0.018$) is trivial, prioritizing resources by season would be statistically unfounded and inefficient.
+                    </p>
+                </div>
+
+                <!-- Recommendation 2: Future Modeling -->
+                <div class="stat-card border-l-4 border-green-500">
+                    <h3 class="text-xl font-bold text-green-300 mb-2">2. Future Modeling Focus: Target Severity</h3>
+                    <p class="text-gray-400">
+                        Immediately shift the target variable from the simple `RecallCount` to **Class I Recall Severity**. The complexity of this binary classification problem requires a more powerful tool:
+                    </p>
+                    <div class="mt-3 p-3 bg-blue-900/50 rounded-md">
+                        <p class="text-lg font-semibold text-blue-300">
+                            Utilize the **CatBoost Classification Model**
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            (F1 Score: 0.72) to uncover latent interactions between quarter, product type, and state that drive high-risk events. The use of SHAP values will ensure the model remains explainable to stakeholders.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-6 text-sm text-gray-600 border-t border-gray-800">
+        Data Science Project STAT/CS 387 — &copy; 2025
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
