@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDA Recall Project: A Data Story</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons for aesthetic appeal -->
+    <script type="module" src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* General Styling for a modern, impactful data story */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Deep Charcoal/Dark Blue background */
+            color: #e5e7eb; /* Off-White Text */
+            line-height: 1.6;
+        }
+        .story-section {
+            min-height: 70vh; /* Ensures sections feel substantial, like scroll events */
+            padding: 6rem 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .highlight-box {
+            background-color: #1f2937; /* Dark Gray background */
+            border-left: 4px solid #3b82f6; /* Blue accent */
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .stat-card {
+            background-color: #161b22;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECTION 1: THE HOOK & HYPOTHESIS -->
+    <section id="hook" class="story-section bg-gray-900">
+        <div class="container mx-auto">
+            <header class="text-center space-y-4">
+                <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
+                    The Recall Question
+                </h1>
+                <h2 class="text-xl sm:text-2xl font-light text-gray-300">
+                    Assessing Seasonal Dependency in 74,000+ FDA Product Recalls
+                </h2>
+                <div class="text-lg pt-4 text-gray-400">
+                    Analyst: Daniel Blumberg | Data: 10 Years of FDA Enforcement Records
+                </div>
+            </header>
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE STATISTICAL TEST -->
+    <section id="test" class="story-section bg-gray-800">
+        <div class="container mx-auto space-y-8">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="calculator" class="w-8 h-8 text-blue-400"></i>
+                <h2 class="text-3xl font-bold">PHASE 1: RIGOROUS TESTING</h2>
+            </div>
+            
+            <p class="text-xl text-gray-300">
+                We used a **One-Way Analysis of Variance (ANOVA)** to test a common industry hypothesis: Is the mean volume of FDA product recalls significantly dependent on the **Quarter of the Year**?
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="stat-card">
+                    <p class="text-sm text-gray-400">Test Used</p>
+                    <p class="text-xl font-semibold text-white">One-Way ANOVA</p>
+                </div>
+                <div class="stat-card">
+                    <p class="text-sm text-gray-400">Independent Variable</p>
+                    <p class="text-xl font-semibold text-white">Quarter Group</p>
+                </div>
+                <div class="stat-card">
+                    <p class="text-sm text-gray-400">Dependent Variable</p>
+                    <p class="text-xl font-semibold text-white">RecallCount</p>
+                </div>
+                <div class="stat-card">
+                    <p class="text-sm text-gray-400">Significance Level</p>
+                    <p class="text-xl font-semibold text-white">$\alpha=0.05$</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p class="text-lg font-bold text-blue-300 mb-2">Formal Hypotheses</p>
+                <p class="text-sm text-gray-400">
+                    $\mathbf{H_{0}:}$ There is no association between the time of year and the mean number of product recalls $(\mu_{Q1}=\mu_{Q2}=\mu_{Q3}=\mu_{Q4})$.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: THE RESULT & THE FAILURE -->
+    <section id="result" class="story-section bg-gray-900">
+        <div class="container mx-auto space-y-8">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="frown" class="w-8 h-8 text-red-400"></i>
+                <h2 class="text-3xl font-bold">PHASE 2: THE NON-SIGNIFICANT RESULT</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-semibold text-red-400">Decision: FAIL TO REJECT $\mathbf{H_{0}}$</h3>
+                    <p class="text-gray-300">
+                        The statistical test provided a clear negative finding, completely contradicting the initial observation from the Exploratory Data Analysis (EDA).
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400">
+                        <li>**F-Statistic:** $F(3,40)=0.24$</li>
+                        <li>**P-Value:** <span class="text-red-400 font-bold">0.865</span> (Far above $\alpha=0.05$)</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box bg-red-900/30 border-red-500 space-y-2">
+                    <p class="text-sm text-red-300 font-bold uppercase">Practical Insignificance</p>
+                    <p class="text-5xl font-extrabold text-red-400">0.
