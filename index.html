@@ -61,12 +61,14 @@
 
     <section id="hypothesis-testing">
         <h2>Hypothesis Test Result: Is Recall Activity Seasonal?</h2>
+        
+        <img src="quarterly_recalls.png" alt="Box plot visualization of FDA recall counts across four quarters of the year, demonstrating no significant difference in means." class="visualization">
         <div class="test-result">
             <p><strong>Question:</strong> Is there a statistically significant association between the time of year (quarter) and the mean number of product recalls?</p>
             <p><strong>Methodology:</strong> A One-Way Analysis of Variance (ANOVA) was used to compare the mean number of recalls across the four quarterly groups.</p>
             <div class="result-box">
                 <p class="result-label">Statistical Decision</p>
-                <p class="result-value"><strong>FAIL TO REJECT THE NULL HYPOTHESIS</strong></p>
+                <p class="result-value">**FAIL TO REJECT THE NULL HYPOTHESIS**</p>
             </div>
             <p><strong>Conclusion:</strong> The analysis yielded a p-value of **0.865** (with a significance level $\alpha=0.05$). Since the p-value is significantly larger than $\alpha$, there is **no statistically significant seasonal trend** in the mean number of recalls. Seasonality explains less than 2% of the total variance in recall volume.</p>
         </div>
