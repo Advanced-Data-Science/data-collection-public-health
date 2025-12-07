@@ -3,238 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FDA Recall Project: A Data Story</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Lucide Icons for aesthetic appeal -->
-    <script type="module" src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        /* General Styling for a modern, impactful data story */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d1117; /* Deep Charcoal/Dark Blue background */
-            color: #e5e7eb; /* Off-White Text */
-            line-height: 1.6;
-        }
-        .story-section {
-            min-height: 70vh; /* Ensures sections feel substantial, like scroll events */
-            padding: 6rem 1rem;
-            display: flex;
-            align-items: center;
-        }
-        .container {
-            max-width: 800px;
-        }
-        .highlight-box {
-            background-color: #1f2937; /* Dark Gray background */
-            border-left: 4px solid #3b82f6; /* Blue accent */
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-        }
-        .stat-card {
-            background-color: #161b22;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s;
-        }
-        .stat-card:hover {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-        }
-    </style>
+    <title>Assessing Consumer Risk and Validity of Consumer Products Using FDA Recall Data</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>Assessing Consumer Risk and Validity of Consumer Products Using FDA Recall Data</h1>
+        <p class="team-info">A Data Science Project by Daniel Blumberg, Sean Niez, Madelynn Smith, and Ainsley Williams</p>
+    </header>
 
-    <!-- SECTION 1: THE HOOK & HYPOTHESIS -->
-    <section id="hook" class="story-section bg-gray-900">
-        <div class="container mx-auto">
-            <header class="text-center space-y-4">
-                <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-                    The Recall Question
-                </h1>
-                <h2 class="text-xl sm:text-2xl font-light text-gray-300">
-                    Assessing Seasonal Dependency in 74,000+ FDA Product Recalls
-                </h2>
-                <div class="text-lg pt-4 text-gray-400">
-                    Analyst: Daniel Blumberg | Data: 10 Years of FDA Enforcement Records
-                </div>
-            </header>
-        </div>
+    <section id="overview">
+        <h2>Project Overview</h2>
+        <p>The Food and Drug Administration (FDA) maintains detailed records of product recalls, which are vital for public health. The goal of this project is to apply advanced data science methods, including time series analysis and clustering, to the FDA Recall records. This analysis is designed to uncover hidden trends and patterns in recall activity to transform raw records into actionable knowledge for public health agencies, manufacturers, and consumers.</p>
+        <p>The primary dataset, **FDAcleaned.xlsx**, is sourced from public FDA records, covering ten fiscal years from October 1, 2014, to September 30, 2024, and contains approximately 93,576 unique recall events.</p>
+        <a href="FDAcleaned.xlsx - Sheet1.csv" class="button">Download Cleaned Data (CSV)</a>
     </section>
 
-    <!-- SECTION 2: THE STATISTICAL TEST -->
-    <section id="test" class="story-section bg-gray-800">
-        <div class="container mx-auto space-y-8">
-            <div class="flex items-center space-x-3">
-                <i data-lucide="calculator" class="w-8 h-8 text-blue-400"></i>
-                <h2 class="text-3xl font-bold">PHASE 1: RIGOROUS TESTING</h2>
+    <hr>
+
+    <section id="eda-findings">
+        <h2>Key Exploratory Data Analysis (EDA) Findings</h2>
+        <div class="findings-grid">
+            <div class="finding-card">
+                <h3>Product Type Frequency</h3>
+                <p>Recall activity is highly concentrated among certain product types:</p>
+                <ul>
+                    <li>**Devices:** 28,135 recalls (most frequent)</li>
+                    <li>**Food/Cosmetics:** 22,502 recalls</li>
+                    <li>**Drugs:** 13,124 recalls</li>
+                </ul>
+                <p>This may be due to high production and distribution volumes for these categories.</p>
             </div>
             
-            <p class="text-xl text-gray-300">
-                We used a **One-Way Analysis of Variance (ANOVA)** to test a common industry hypothesis: Is the mean volume of FDA product recalls significantly dependent on the **Quarter of the Year**?
-            </p>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="stat-card">
-                    <p class="text-sm text-gray-400">Test Used</p>
-                    <p class="text-xl font-semibold text-white">One-Way ANOVA</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-sm text-gray-400">Independent Variable</p>
-                    <p class="text-xl font-semibold text-white">Quarter Group</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-sm text-gray-400">Dependent Variable</p>
-                    <p class="text-xl font-semibold text-white">RecallCount</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-sm text-gray-400">Significance Level</p>
-                    <p class="text-xl font-semibold text-white">$\alpha=0.05$</p>
-                </div>
+            <div class="finding-card">
+                <h3>Recall Severity</h3>
+                <p>Recall severity is measured by classification:</p>
+                <ul>
+                    <li>**Class II:** 52,606 recalls (moderate risk)</li>
+                    <li>**Class I:** 15,989 recalls (high risk, potential for serious injury or death)</li>
+                </ul>
+                <p>The dominance of Class II and I recalls shows that significant risk management concerns persist across industries.</p>
             </div>
 
-            <div class="highlight-box">
-                <p class="text-lg font-bold text-blue-300 mb-2">Formal Hypotheses</p>
-                <p class="text-sm text-gray-400">
-                    $\mathbf{H_{0}:}$ There is no association between the time of year and the mean number of product recalls $(\mu_{Q1}=\mu_{Q2}=\mu_{Q3}=\mu_{Q4})$.
-                </p>
+            <div class="finding-card">
+                <h3>Geographic Concentration</h3>
+                <p>Recall activity is concentrated in states that are major centers for manufacturing, distribution, and population:</p>
+                <ul>
+                    <li>**California:** 8,037 recalls (highest count)</li>
+                    <li>**Illinois:** 6,007 recalls</li>
+                    <li>**New Jersey:** 4,535 recalls</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3: THE RESULT & THE FAILURE -->
-    <section id="result" class="story-section bg-gray-900">
-        <div class="container mx-auto space-y-8">
-            <div class="flex items-center space-x-3">
-                <i data-lucide="frown" class="w-8 h-8 text-red-400"></i>
-                <h2 class="text-3xl font-bold">PHASE 2: THE NON-SIGNIFICANT RESULT</h2>
+    <hr>
+
+    <section id="hypothesis-testing">
+        <h2>Hypothesis Test Result: Is Recall Activity Seasonal?</h2>
+        <div class="test-result">
+            <p><strong>Question:</strong> Is there a statistically significant association between the time of year (quarter) and the mean number of product recalls?</p>
+            <p><strong>Methodology:</strong> A One-Way Analysis of Variance (ANOVA) was used to compare the mean number of recalls across the four quarterly groups.</p>
+            <div class="result-box">
+                <p class="result-label">Statistical Decision</p>
+                <p class="result-value"><strong>FAIL TO REJECT THE NULL HYPOTHESIS</strong></p>
             </div>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="space-y-4">
-                    <h3 class="text-2xl font-semibold text-red-400">Decision: FAIL TO REJECT $\mathbf{H_{0}}$</h3>
-                    <p class="text-gray-300">
-                        The statistical test provided a clear negative finding, completely contradicting the initial observation from the Exploratory Data Analysis (EDA).
-                    </p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400">
-                        <li>**F-Statistic:** $F(3,40)=0.24$</li>
-                        <li>**P-Value:** <span class="text-red-400 font-bold">0.865</span> (Far above $\alpha=0.05$)</li>
-                    </ul>
-                </div>
-                
-                <div class="highlight-box bg-red-900/30 border-red-500 space-y-2">
-                    <p class="text-sm text-red-300 font-bold uppercase">Practical Insignificance</p>
-                    <p class="text-5xl font-extrabold text-red-400">0.018</p>
-                    <p class="text-lg text-gray-200">
-                        **Effect Size ($\eta^2$):** The quarter of the year explains only **1.8%** of the total variance in recall volume.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="pt-4">
-                <h3 class="text-xl font-semibold text-blue-300">Visual Evidence of No Effect</h3>
-                <p class="text-gray-400 italic">
-                    The visualization below clearly shows why the hypothesis failed: the means for all four quarters are too similar.
-                </p>
-                <div class="bg-gray-700/50 p-6 mt-4 rounded-lg text-center text-gray-500 border border-dashed border-gray-600">
-                    ****
-                    <p class="text-sm mt-1">Placeholder for the Mean Quarterly Recalls Bar Chart, confirming near-identical means.</p>
-                </div>
-            </div>
+            <p><strong>Conclusion:</strong> The analysis yielded a p-value of **0.865** (with a significance level $\alpha=0.05$). Since the p-value is significantly larger than $\alpha$, there is **no statistically significant seasonal trend** in the mean number of recalls. Seasonality explains less than 2% of the total variance in recall volume.</p>
         </div>
     </section>
 
-    <!-- SECTION 4: THE PIVOT (THE TRUE INSIGHT) -->
-    <section id="pivot" class="story-section bg-gray-800">
-        <div class="container mx-auto space-y-8">
-            <div class="flex items-center space-x-3">
-                <i data-lucide="lightbulb" class="w-8 h-8 text-yellow-400"></i>
-                <h2 class="text-3xl font-bold">PHASE 3: THE FUTURE STORY - SEVERITY</h2>
-            </div>
-            
-            <p class="text-xl text-gray-300">
-                A simple count (`RecallCount`) was too crude. The key breakthrough came from exploring other dimensions, revealing a new, critical pattern: **Risk is clustered by geography and severity, not time.**
-            </p>
+    <hr>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Geographic Insight -->
-                <div class="stat-card border-l-4 border-yellow-500 space-y-2">
-                    <h3 class="text-lg font-semibold text-yellow-300">Geographic Risk Clustering</h3>
-                    <p class="text-sm text-gray-400">
-                        Exploratory Analysis revealed total recall volume is strongly clustered in high-population, manufacturing, and distribution hubs (CA, TX, IL, FL).
-                    </p>
-                    <div class="bg-gray-700/50 p-4 mt-2 rounded-md text-center text-gray-500 border border-dashed border-gray-600">
-                        ****
-                        <p class="text-xs mt-1">Placeholder for Geographic Recall Density Map.</p>
-                    </div>
-                </div>
-
-                <!-- Severity Insight -->
-                <div class="stat-card border-l-4 border-yellow-500 space-y-2">
-                    <h3 class="text-lg font-semibold text-yellow-300">The Severity Pattern</h3>
-                    <p class="text-sm text-gray-400">
-                        While total volume is non-seasonal, the *mix* of high-risk recalls may be. The chart below suggests a pattern in **Class I (Most Severe)** recalls by season.
-                    </p>
-                    <div class="bg-gray-700/50 p-4 mt-2 rounded-md text-center text-gray-500 border border-dashed border-gray-600">
-                        ****
-                        <p class="text-xs mt-1">Placeholder for Recall Proportion by Severity Chart.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 5: ACTIONABLE RECOMMENDATION -->
-    <section id="recommendation" class="story-section bg-gray-900">
-        <div class="container mx-auto space-y-8">
-            <div class="flex items-center space-x-3">
-                <i data-lucide="trending-up" class="w-8 h-8 text-green-400"></i>
-                <h2 class="text-3xl font-bold">PHASE 4: ACTIONABLE STRATEGY</h2>
-            </div>
-
-            <p class="text-xl text-gray-300">
-                The analysis yields two key strategic takeaways for regulators and manufacturers:
-            </p>
-
-            <div class="space-y-6">
-                <!-- Recommendation 1: Resource Allocation -->
-                <div class="stat-card border-l-4 border-green-500">
-                    <h3 class="text-xl font-bold text-green-300 mb-2">1. Resource Allocation: Maintain Uniformity</h3>
-                    <p class="text-gray-400">
-                        **Maintain quality control and inspection resources uniformly throughout the year.** Since the effect size ($\eta^2=0.018$) is trivial, prioritizing resources by season would be statistically unfounded and inefficient.
-                    </p>
-                </div>
-
-                <!-- Recommendation 2: Future Modeling -->
-                <div class="stat-card border-l-4 border-green-500">
-                    <h3 class="text-xl font-bold text-green-300 mb-2">2. Future Modeling Focus: Target Severity</h3>
-                    <p class="text-gray-400">
-                        Immediately shift the target variable from the simple `RecallCount` to **Class I Recall Severity**. The complexity of this binary classification problem requires a more powerful tool:
-                    </p>
-                    <div class="mt-3 p-3 bg-blue-900/50 rounded-md">
-                        <p class="text-lg font-semibold text-blue-300">
-                            Utilize the **CatBoost Classification Model**
-                        </p>
-                        <p class="text-sm text-gray-400">
-                            (F1 Score: 0.72) to uncover latent interactions between quarter, product type, and state that drive high-risk events. The use of SHAP values will ensure the model remains explainable to stakeholders.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="text-center py-6 text-sm text-gray-600 border-t border-gray-800">
-        Data Science Project STAT/CS 387 — &copy; 2025
+    <footer>
+        <p>Data Source: FDA Recalls, Enforcement Reports, and Alerts Dashboard: <a href="https://datadashboard.fda.gov/oii/cd/recalls.htm" target="_blank">FDA Recall Dashboard</a></p>
     </footer>
-
-    <!-- Initialize Lucide Icons -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        });
-    </script>
 </body>
 </html>
